@@ -1,0 +1,57 @@
+Sub stockdata()
+    'define the data
+    Dim ws As Worksheet
+    Dim wb As Workbook
+    Dim ticker As String
+    Dim volume As Long
+    Dim open_price As Double
+    Dim close_price As Double
+    Dim yearly_change As Double
+    Dim percent_change As Double
+    Dim Summary_Table_Row As Integer
+        
+    'set headers in each worksheet - from credit card brand activity
+        For Each ws In ThisWorkbook.Sheets
+                ws.Cells(1, 9).Value = "Ticker"
+                ws.Cells(1, 10).Value = "Yearly Change"
+                ws.Cells(1, 11).Value = "Percent Change"
+                ws.Cells(1, 12).Value = "Total Stock Volume"
+                ws.Cells(1, 16).Value = "Ticker"
+                ws.Cells(1, 17).Value = "Value"
+    
+            'set integers for loop
+            Summary_Table_Row = 2
+            
+            'loop through all stock names
+            For i = 2 To ws.UsedRange.Rows.Count
+    
+            'check for difference in ticker symbol
+            If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+    
+            'find the values
+            ticker = ws.Cells(i, 1).Value
+            vol = ws.Cells(i, 7).Value
+        
+            open_price = ws.Cells(i, 3).Value
+            close_price = ws.Cells(i, 6).Value
+            yearly_change = close_price - open_price
+            percent_change = (close_price - open_price) / open_price
+            ws.Columns("K").NumberFormat = "0.00%"
+        
+            'results into summary table
+            ws.Cells(Summary_Table_Row, 9).Value = ticker
+            ws.Cells(Summary_Table_Row, 10).Value = yearly_change
+            ws.Cells(Summary_Table_Row, 11).Value = percent_change
+            ws.Cells(Summary_Table_Row, 12).Value = vol
+        
+            Summary_Table_Row = Summary_Table_Row + 1
+            volume = 0
+            
+            End If
+        
+            Next i
+        
+        Next ws
+    
+End Sub
+
