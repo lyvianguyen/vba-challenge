@@ -1,5 +1,3 @@
-# vba-challenge
-
 # Instructions
   Create a script through all the stocks for one year and outputs the following information:
     The ticker symbol
